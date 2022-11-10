@@ -14,39 +14,39 @@ The point of this project was to "call" variants between two parents and a child
 
 Each parent and child have 2 read fq files associated with them, R1 and R2. These denote different reads from primers at each end of the genome. Neither of them contain the whole genome, hence the combination of the .sai files in step 5.
 
-1. Download sample exome sequences
+## 1. Download sample exome sequences
 
 For each of the the father, mother, and proband, I downloaded two exome sequence files (.fq). These files follow FASTQ format (https://support.illumina.com/bulletins/2016/04/fastq-files-explained.html), kind of the standard format for sequencing outputs. FASTQ consists of a sequence of base-pair readings and quality measurements for each read (denoted by an ASCII character).
 
-2. Download human genome reference
+## 2. Download human genome reference
 
 The human genome file is hosted by UCSC (who also has a cuttng-edge bioinformatics program) at http://hgdownload.cse.ucsc.edu/goldenpath/hg38/bigZips/. hg38 is simply the most updated reference genome. It downloads as a .fa file, just a huge string of bases.
 
-3. Index the human genome
+## 3. Index the human genome
 
 Indexing of the human genome acts just like indexing of a book; it makes queries faster, saving both time and memory. Indexing was performed by BWA (Burrows-Wheeler Aligner), and took about an hour for hg38.
 
 We couldn't just download a pre-indexed genome, because we needed it to be indexed by BWA specifically, since we used the indexed file to align in the next step.
 
-4. Align test sequences to reference
+## 4. Align test sequences to reference
 
 Now that we have the indexed reference genome, we can align all of our test genomes to it. This outputs a sai file, which are later aligned to become a SAM file.
 
 I'm actually not really sure the use of multiple sai files. How do we combine the two sai files?
 
-5. Combine multiple sai aligned sequences for the same genome
+## 5. Combine multiple sai aligned sequences for the same genome
 
 You aligned multiple reads of the same test genomes (a few for each), and now you want to combine them to a single sequence alignment file. A SAM file shows you your sequences aligned to a reference sequence. This helps for variant calling, by easily being able to compare different bases to find variants.
 
 Usually, SAM files are used for humans, and BAM files are used for computation (binary SAM file). 
 
-6. Use picard to sort the samples, mark duplicates, and convert to .mpileup format
+## 6. Use picard to sort the samples, mark duplicates, and convert to .mpileup format
 
 Picard is used to sort the samples by location, effectively giving you a more ordered sequence. After sorting, picard then marks duplicates with a hex flag to make reading more efficient. Finally, all .bam files are converted to .mpileup format for use with VarScan.
 
 Yi talked about how new of a field bioinformatics is, and consequently how many tools there are to do anything in the field. Converting to .mpileup is a prime example, because it doesn't actually change anything about the data, just converts it into .mpileup, still containing the same informtion. This is something NextFlow is trying to solve.
 
-7. Call variants/filtering
+## 7. Call variants/filtering
 
 Finally, we are finally getting to do what we set out to do! This process seems very easily pipelined and automated, and is very tedious to do by hand.
 
@@ -54,6 +54,6 @@ We now "call" indels and SNPs, outputted as .indel and .snp files, containing al
 
 Filtering is another important step. Some indels may cause changes to be read as SNPs, especially in the region around the indel site. Filtering takes out SNP calls that are too close to indel sites, and may not be reliable.
 
-8. Comparison between genomes
+## 8. Comparison between genomes
 
 These filtered reads can be exported as a CSV file, and can view a variety of data about the variant calls for each genome in a nice, human-readable format. Our final goal, though, is to compare mutations between parents and children. There is a nice script, find_unique_indels.py, that allows you to filter out unique indels and make tons of customized comparisons. This is really dependent on your needs, so there's no concrete steps after this.
