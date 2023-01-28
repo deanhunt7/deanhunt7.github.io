@@ -30,3 +30,12 @@ Recall the 3b1b video about Fourier transforms. What he did was **wrap the linea
 It turns out that when you look at this graph, you'll see a spike right at the frequency of your original function. If there are 3 frequencies, you'll see 3 spikes. Thus, graphing the A chord in this manner will show you 3 spikes, right on the A, C# and E frequencies.
 
 <hr>
+
+# Chem Application
+
+This is applied in the chemistry spectrometry in a clever way. Remember the diagram for the FTIR spectrometer:
+
+![image](https://user-images.githubusercontent.com/83550862/215231681-401ca070-9203-4d4c-befd-6dbb20ab7185.png)
+
+
+Furthermore, recall the effects of two sound frequencies overlapping. Now we have a similar thing happening, this time with radiation frequencies. The beam splitter splits up the light: part goes to the fixed mirror, and part ot the moving mirror. This makes the light **out of phase**, which gives us something to measure against time essentially. Then, this light combines and goes through the sample, where it is absorbed. The moving mirror allows the IR to scan throughout the whole spectrum, and after the whole spectrum has been accounted for, it goes through a fourier transform to be transformed into spectral data.
