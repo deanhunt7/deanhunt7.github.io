@@ -27,17 +27,20 @@ The easiest way to think about the Kalman gain is basically as a measure of trus
 
 $$\frac{E_{est}}{E_{est} + E_{measure}}$$
 
-where $$E_{est}$$ represents the error in the estimate (we'll get to that soon) and $$E_{measure}$$ represents an error in your measurement. This equation is pretty intuitive when viewed as a metric of trust; as $E_{measure} { \rightarrow }\infty$, the fraction approaches zero (so your trust is extremely low). Similarly, as $$E_{measure} { \rightarrow }0$$, the gain approaches 1 (so your trust is absolute). This is multiplied against the difference between measurement and prediction values, shown in 1) above.
+where $$E_{est}$$ represents the error in the estimate (we'll get to that soon) and $$E_{measure}$$ represents an error in your measurement. This equation is pretty intuitive when viewed as a metric of trust; as $$E_{measure} { \rightarrow }\infty$$, the fraction approaches zero (so your trust is extremely low). Similarly, as $$E_{measure} { \rightarrow }0$$, the gain approaches 1 (so your trust is absolute). This is multiplied against the difference between measurement and prediction values, shown in 1) above.
 
 Now that we have the Kalman gain calculated, we can use this equation:
+
 $$est_{t} = est_{t-1} + KG(mea - est_{t-1})$$
-to calculate our newest estimate of position. (Note: $est_{t}$ is actually the estimate for time $t$, but is *used* at time $t+1$, once we actually have information (our measurement) on how good our estimate was. That was confusing for me for a while.) This equation is very intuitive: to make your new estimate, you take your old estimate and add the weighted difference between your measurement and previous estimate. In the falling object example, we'll take a measurement after the object has been falling for some time. We have a previous estimate for where we think the object *should* be, and we have a measurement for where the sensors tell us the object *actually* is. We'll use the Kalman gain in the above equation to split this difference, and settle on some midpoint between the two values.
+
+to calculate our newest estimate of position. (Note: $$est_{t}$$ is actually the estimate for time $$t$$, but is *used* at time $$t+1$$, once we actually have information (our measurement) on how good our estimate was. That was confusing for me for a while.) This equation is very intuitive: to make your new estimate, you take your old estimate and add the weighted difference between your measurement and previous estimate. In the falling object example, we'll take a measurement after the object has been falling for some time. We have a previous estimate for where we think the object *should* be, and we have a measurement for where the sensors tell us the object *actually* is. We'll use the Kalman gain in the above equation to split this difference, and settle on some midpoint between the two values.
 
 ### Estimate error
 
 After this, we also need to update the estimate in our error. This is necessary for calculating the Kalman gain for the next iteration of the filter. Two equivalent equations for estimate error are given below.
 
 $$\frac{(E_{mea})\cdot(E_{est_{t-1}})}{E_{mea} + E_{est_{t-1}}} \ \ \ \    or \ \ \ \   (1-KG)E_{est_{t-1}}$$
+
 The intuition is clear in the second equation. As the Kalman gain increases (the measurements are more trustworthy), our estimation error decreases (since we are more certain we are estimating the actual position of the object).
 
 As shown in the diagram, this error feeds into the next iteration of the cycle, and is used to calculate the next Kalman gain.
