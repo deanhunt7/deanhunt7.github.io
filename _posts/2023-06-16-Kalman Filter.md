@@ -26,7 +26,8 @@ To put this into some more context, I'll give a concrete example. Let's pretend 
 The easiest way to think about the Kalman gain is basically as a measure of trust of your sensors. The Kalman gain is calculated based on the following formula:
 
 $$\frac{E_{est}}{E_{est} + E_{measure}}$$
-where $E_{est}$ represents the error in the estimate (we'll get to that soon) and $E_{measure}$ represents an error in your measurement. This equation is pretty intuitive when viewed as a metric of trust; as $E_{measure} { \rightarrow }\infty$, the fraction approaches zero (so your trust is extremely low). Similarly, as $E_{measure} { \rightarrow }0$, the gain approaches 1 (so your trust is absolute). This is multiplied against the difference between measurement and prediction values, shown in 1) above.
+
+where $$E_{est}$$ represents the error in the estimate (we'll get to that soon) and $$E_{measure}$$ represents an error in your measurement. This equation is pretty intuitive when viewed as a metric of trust; as $E_{measure} { \rightarrow }\infty$, the fraction approaches zero (so your trust is extremely low). Similarly, as $$E_{measure} { \rightarrow }0$$, the gain approaches 1 (so your trust is absolute). This is multiplied against the difference between measurement and prediction values, shown in 1) above.
 
 Now that we have the Kalman gain calculated, we can use this equation:
 $$est_{t} = est_{t-1} + KG(mea - est_{t-1})$$
