@@ -63,20 +63,20 @@ Just like before, we start with an initial state estimate $$X_{0}$$ , and someth
 
 In this part of the process, we predict the new state, given a few pieces of information. (1) represents the predicted state update equation, with explanations of variables listed below.
 $$X_{kp} = AX_{k-1} + B\mu_{k} + \omega_{k} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (1)$$
-$$p$$: denotes a prediction.
-$$k$$: denotes a discrete time step k 
-$$X_{k-1}$$: previous prediction given from the Kalman filter
-$$A$$: linear transformation matrix. Computes linear extrapolation from state $$X_{k-1}$$.
-$$\mu_{k}$$: control variable matrix. A "control variable" is any variable that represents an outside force acting on the system (essentially how Kalman takes care of non-linearity)
-$$B$$: control transformation matrix. Computes linear transformation for control variable matrix
-$$\omega_{k}$$: predicted noise matrix. Assumed $$w_k \sim \mathcal{N}(0, Q_k)$$ , with covariance $$Q_k$$ explained below. Takes care of any outside measurement or environmental noise. I'm probably not going to use this much in this explanation, but it's helpful to keep in mind.
+\n$$p$$: denotes a prediction
+\n$$k$$: denotes a discrete time step k 
+\n$$X_{k-1}$$: previous prediction given from the Kalman filter
+\n$$A$$: linear transformation matrix. Computes linear extrapolation from state $$X_{k-1}$$.
+\n$$\mu_{k}$$: control variable matrix. A "control variable" is any variable that represents an outside force acting on the system (essentially how Kalman takes care of non-linearity)
+\n$$B$$: control transformation matrix. Computes linear transformation for control variable matrix
+\n$$\omega_{k}$$: predicted noise matrix. Assumed $$w_k \sim \mathcal{N}(0, Q_k)$$ , with covariance $$Q_k$$ explained below. Takes care of any outside measurement or environmental noise. I'm probably not going to use this much in this explanation, but it's helpful to keep in mind.
 
 Equation (1) is pretty intuitive. You're essentially adding up all of the state updates from interior and exterior processes, plus some noise. 
 
 Next, equation (2) represents the update to the predicted error matrix, with variable explanations.
 $$P_{kp} = AP_{k-1}A^{T} + Q_{k} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2)$$
-$$P_{k}$$: predicted process covariance matrix at time $$k$$ (basically the error in the estimate)
-$$Q_k$$: process noise covariance matrix. This is the covariance value from the Gaussian $$w_k$$. This also keeps $$P$$ from going to 0, which would lead to inaccurate estimation of error.
+\n$$P_{k}$$: predicted process covariance matrix at time $$k$$ (basically the error in the estimate)
+\n$$Q_k$$: process noise covariance matrix. This is the covariance value from the Gaussian $$w_k$$. This also keeps $$P$$ from going to 0, which would lead to inaccurate estimation of error.
 
 This equation is also fairly straightforward. $$A$$ and $$A^T$$ **transform the error matrix according to the dynamics described by $$A$$.** This took me a little bit of time to understand, but I think I get it now. The covariance matrix needs to be propagated according to a set of rules, and these are defined by $A$ (the system dynamics). The reason we don't use $$B$$ is because this denotes control variable dynamics, which are forces not contained within the system. Those wouldn't have any effect on the actual process error, so we only use $$A$$ to transform $$P_{k-1}$$. The final $$A^T$$ transformation is to map the product $$AP$$ back into the correct dimensions.
 
@@ -86,12 +86,12 @@ $$H$$: observation model. Basically a mask that maps the entire state space onto
 $$z_k$$: observation noise. $$z_k \sim \mathcal{N}(0, R_k)$$, with $$R_k$$ being used in the Kalman gain equation (4).
 
 Now, let's revisit our 1-D intuition. After we have 1) a prediction, and 2) a measurement, we then used these two to calculate the Kalman gain, a measure of sensor trust. The same is true in this case; here's the Kalman gain equation. It should look very similar to the 1-D equation.
-$$K = \frac{P_{kp}H^T}{HP_{kp}H^T+R_k}$$
+$$K = \frac{P_{kp}H^T}{HP_{kp}H^T+R_k}$$\n
 Compare this to $$\frac{E_{est}}{E_{est} + E_{measure}}$$ and the parallel is obvious.
 
 Using the Kalman gain, we update the official state $$X_k$$:
 $$X_k = X_{kp} + K(Y - HX_{kp})$$
-which, again, is the exact same as the 1-D version $$est_{t} = est_{t-1} + K(mea - est_{t-1})$$.
+which, again, is the exact same as the 1-D version $$est_{t} = est_{t-1} + K(mea - est_{t-1})$$.\n
 Now there's a state to report! The only thing left is to report the updated error $$P$$, given by $$P_k = (I-KH)P_{kp}$$. As always, this is a parallel to the 1-D version $$(1-K)E_{est_{t-1}}$$, where the error becomes smaller whenever the measurements are trusted more (higher gain).
 
 And that just about does it! The outputs $$X_k$$ and $$P_k$$ feed back into the system as the previous observation, and the filter recurses on these inputs, slowly converging on the true value of the modeled process.
