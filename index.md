@@ -1,6 +1,3 @@
----
-# Feel free to add content and custom Front Matter to this file.
-# To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
+## Dean's Blog
 
-layout: home
----
+I write about things that really interest me. I hope you find some of these posts useful!
