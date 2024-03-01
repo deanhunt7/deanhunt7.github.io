@@ -1,3 +1,4 @@
+{% include footer.html %}
 One critical piece of the [state estimation process of sensor fusion](https://deanhunt7.github.io/2023/06/13/Sensor-Fusion.html) is the [Kalman filter](https://en.wikipedia.org/wiki/Kalman_filter). I'm writing this blog post mainly to brush up on my linear algebra chops, and to make a cool application of the filter to something I find interesting.
 
 # What the Kalman filter is
