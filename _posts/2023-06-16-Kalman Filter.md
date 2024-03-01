@@ -33,7 +33,7 @@ Now that we have the Kalman gain calculated, we can use this equation:
 
 $$est_{t} = est_{t-1} + KG(mea - est_{t-1})$$
 
-to calculate our newest estimate of position. (Note: $$est_{t}$$ is actually the estimate for time $$t$$, but is *used* at time $$t+1$$, once we actually have information (our measurement) on how good our estimate was. That was confusing for me for a while.) This equation is very intuitive: to make your new estimate, you take your old estimate and add the weighted difference between your measurement and previous estimate. In the falling object example, we'll take a measurement after the object has been falling for some time. We have a previous estimate for where we think the object *should* be, and we have a measurement for where the sensors tell us the object *actually* is. We'll use the Kalman gain in the above equation to split this difference, and settle on some midpoint between the two values.
+to calculate our newest estimate of position. (Note: $est_{t}$ is actually the estimate for time $t$, but is *used* at time $t+1$, once we actually have information (our measurement) on how good our estimate was. That was confusing for me for a while.) This equation is very intuitive: to make your new estimate, you take your old estimate and add the weighted difference between your measurement and previous estimate. In the falling object example, we'll take a measurement after the object has been falling for some time. We have a previous estimate for where we think the object *should* be, and we have a measurement for where the sensors tell us the object *actually* is. We'll use the Kalman gain in the above equation to split this difference, and settle on some midpoint between the two values.
 
 ### Estimate error
 
