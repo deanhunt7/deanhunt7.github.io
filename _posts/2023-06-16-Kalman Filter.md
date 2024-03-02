@@ -36,7 +36,7 @@ The easiest way to think about the Kalman gain is basically as a measure of trus
 
 $$\frac{E_{est}}{E_{est} + E_{measure}}$$
 
-where $$E_{est}$$ represents the error in the estimate (we'll get to that soon) and $$E_{measure}$$ represents an error in your measurement. This equation is pretty intuitive when viewed as a metric of trust; as $$E_{measure} { \rightarrow }\infty$$, the fraction approaches zero (so your trust is extremely low). Similarly, as $$E_{measure} { \rightarrow }0$$, the gain approaches 1 (so your trust is absolute). This is multiplied against the difference between measurement and prediction values, shown in 1) above.
+where $E_{est}$ represents the error in the estimate (we'll get to that soon) and $E_{measure}$ represents an error in your measurement. This equation is pretty intuitive when viewed as a metric of trust; as $E_{measure} { \rightarrow }\infty$, the fraction approaches zero (so your trust is extremely low). Similarly, as $E_{measure} { \rightarrow }0$, the gain approaches 1 (so your trust is absolute). This is multiplied against the difference between measurement and prediction values, shown in 1) above.
 
 Now that we have the Kalman gain calculated, we can use this equation:
 
@@ -66,7 +66,7 @@ Similar to the 1-D example, here's a map of the multi-dimensional Kalman filter 
 
 ![thumbnail_11413ACC-A3FB-4181-9231-608DBF3801DA](https://github.com/deanhunt7/deanhunt7.github.io/assets/83550862/b4b3bd0f-e37e-47cf-83ba-6efb2a67494c)
 
-Just like before, we start with an initial state estimate $$X_{0}$$ , and something new: $$P_{0}$$, which we call our "process covariance matrix". I'll go more into it later, but for right now picture it as the initial process error estimate. These are fed into the "previous state" part of the loop, and continue on to the new state prediction.
+Just like before, we start with an initial state estimate $X_{0}$ , and something new: $P_{0}$, which we call our "process covariance matrix". I'll go more into it later, but for right now picture it as the initial process error estimate. These are fed into the "previous state" part of the loop, and continue on to the new state prediction.
 
 ### Predict new state
 
@@ -74,19 +74,19 @@ In this part of the process, we predict the new state, given a few pieces of inf
 
 $$X_{kp} = AX_{k-1} + B\mu_{k} + \omega_{k} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (1)$$
 
-$$p$$: denotes a prediction
+$p$: denotes a prediction
 
-$$k$$: denotes a discrete time step k 
+$k$: denotes a discrete time step k 
 
-$$X_{k-1}$$: previous prediction given from the Kalman filter
+$X_{k-1}$: previous prediction given from the Kalman filter
 
-$$A$$: linear transformation matrix. Computes linear extrapolation from state $$X_{k-1}$$.
+$A$: linear transformation matrix. Computes linear extrapolation from state $X_{k-1}$.
 
-$$\mu_{k}$$: control variable matrix. A "control variable" is any variable that represents an outside force acting on the system (essentially how Kalman takes care of non-linearity)
+$\mu_{k}$: control variable matrix. A "control variable" is any variable that represents an outside force acting on the system (essentially how Kalman takes care of non-linearity)
 
-$$B$$: control transformation matrix. Computes linear transformation for control variable matrix
+$B$: control transformation matrix. Computes linear transformation for control variable matrix
 
-$$\omega_{k}$$: predicted noise matrix. Assumed $$w_k \sim \mathcal{N}(0, Q_k)$$ , with covariance $$Q_k$$ explained below. Takes care of any outside measurement or environmental noise. I'm probably not going to use this much in this explanation, but it's helpful to keep in mind.
+$\omega_{k}$: predicted noise matrix. Assumed $w_k \sim \mathcal{N}(0, Q_k)$ , with covariance $Q_k$ explained below. Takes care of any outside measurement or environmental noise. I'm probably not going to use this much in this explanation, but it's helpful to keep in mind.
 
 
 
@@ -96,13 +96,13 @@ Next, equation (2) represents the update to the predicted error matrix, with var
 
 $$P_{kp} = AP_{k-1}A^{T} + Q_{k} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2)$$
 
-$$P_{k}$$: predicted process covariance matrix at time $$k$$ (basically the error in the estimate)
+$P_{k}$: predicted process covariance matrix at time $k$ (basically the error in the estimate)
 
-$$Q_k$$: process noise covariance matrix. This is the covariance value from the Gaussian $$w_k$$. This also keeps $$P$$ from going to 0, which would lead to inaccurate estimation of error.
+$Q_k$: process noise covariance matrix. This is the covariance value from the Gaussian $w_k$. This also keeps $P$ from going to 0, which would lead to inaccurate estimation of error.
 
 
 
-This equation is also fairly straightforward. $$A$$ and $$A^T$$ **transform the error matrix according to the dynamics described by $$A$$.** This took me a little bit of time to understand, but I think I get it now. The covariance matrix needs to be propagated according to a set of rules, and these are defined by $$A$$ (the system dynamics). The reason we don't use $$B$$ is because this denotes control variable dynamics, which are forces not contained within the system. Those wouldn't have any effect on the actual process error, so we only use $$A$$ to transform $$P_{k-1}$$. The final $$A^T$$ transformation is to map the product $$AP$$ back into the correct dimensions.
+This equation is also fairly straightforward. $A$ and $A^T$ **transform the error matrix according to the dynamics described by $A$.** This took me a little bit of time to understand, but I think I get it now. The covariance matrix needs to be propagated according to a set of rules, and these are defined by $A$ (the system dynamics). The reason we don't use $B$ is because this denotes control variable dynamics, which are forces not contained within the system. Those wouldn't have any effect on the actual process error, so we only use $A$ to transform $P_{k-1}$. The final $A^T$ transformation is to map the product $AP$ back into the correct dimensions.
 
 Now that we have our predictions, we'll need to take a measurement in order to compare the two. The measurement equation 
 
@@ -110,9 +110,9 @@ $$Y_k = HX_{km} + z_k \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (3)$$
 
 shows the process of collecting such a measurement.
 
-$$H$$: observation model. Basically a mask that maps the entire state space onto the observed state space (the space you care about observing, like position and velocity).
+$H$: observation model. Basically a mask that maps the entire state space onto the observed state space (the space you care about observing, like position and velocity).
 
-$$z_k$$: observation noise. $$z_k \sim \mathcal{N}(0, R_k)$$, with $$R_k$$ being used in the Kalman gain equation (4).
+$z_k$: observation noise. $z_k \sim \mathcal{N}(0, R_k)$, with $R_k$ being used in the Kalman gain equation (4).
 
 
 
@@ -120,17 +120,17 @@ Now, let's revisit our 1-D intuition. After we have 1) a prediction, and 2) a me
 
 $$K = \frac{P_{kp}H^T}{HP_{kp}H^T+R_k}$$
 
-Compare this to $$\frac{E_{est}}{E_{est} + E_{measure}}$$ and the parallel is obvious.
+Compare this to $\frac{E_{est}}{E_{est} + E_{measure}}$ and the parallel is obvious.
 
 Using the Kalman gain, we update the official state 
 
-$$X_k = X_{kp} + K(Y - HX_{kp})$$
+$X_k = X_{kp} + K(Y - HX_{kp})$
 
-which, again, is the exact same as the 1-D version $$est_{t} = est_{t-1} + K(mea - est_{t-1})$$.
+which, again, is the exact same as the 1-D version $est_{t} = est_{t-1} + K(mea - est_{t-1})$.
 
-Now there's a state to report! The only thing left is to report the updated error $$P$$, given by $$P_k = (I-KH)P_{kp}$$. As always, this is a parallel to the 1-D version $$(1-K)E_{est_{t-1}}$$, where the error becomes smaller whenever the measurements are trusted more (higher gain).
+Now there's a state to report! The only thing left is to report the updated error $P$, given by $P_k = (I-KH)P_{kp}$. As always, this is a parallel to the 1-D version $(1-K)E_{est_{t-1}}$, where the error becomes smaller whenever the measurements are trusted more (higher gain).
 
-And that just about does it! The outputs $$X_k$$ and $$P_k$$ feed back into the system as the previous observation, and the filter recurses on these inputs, slowly converging on the true value of the modeled process.
+And that just about does it! The outputs $X_k$ and $P_k$ feed back into the system as the previous observation, and the filter recurses on these inputs, slowly converging on the true value of the modeled process.
 
 There's the 1-D and multi-D versions of the Kalman filter. Initially I was going to include my ipynb in here, but this post is so long that I'll probably just break it out into its own post. Thanks for reading!
 
@@ -144,4 +144,4 @@ $$
 \sigma_{21} & \sigma_{2}^2 \\
 \end{bmatrix}
 $$
-In this matrix, $$\sigma_{1}^2$$ represents the variance of the first variable, $$\sigma_{2}^2$$ represents the variance of the second variable, and $$\sigma_{12}$$ and $$\sigma_{21}$$ represent the covariance between the two variables. Obviously, var-covar matricies are symmetrical, and it turns out they are positive definite (as they should be, since the eigenvalues represent uncertainty in each eigenvector direction, and these uncertainties can't be negative). My understanding of this matrix is that the larger the values in the matrix, the larger the uncertainties of measurement are. That's why you can use this (denoted as $$P$$ in the post) to represent error. What I don't understand is how they make an initial prediction of $$P$$. I'm guessing they take into account known errors in the sensors and possibly a noise coefficient, but I'm not entirely sure. I'll probably ask one of the algo engineers at work about it and update this post based on what they tell me.
+In this matrix, $\sigma_{1}^2$ represents the variance of the first variable, $\sigma_{2}^2$ represents the variance of the second variable, and $\sigma_{12}$ and $\sigma_{21}$ represent the covariance between the two variables. Obviously, var-covar matricies are symmetrical, and it turns out they are positive definite (as they should be, since the eigenvalues represent uncertainty in each eigenvector direction, and these uncertainties can't be negative). My understanding of this matrix is that the larger the values in the matrix, the larger the uncertainties of measurement are. That's why you can use this (denoted as $P$ in the post) to represent error. What I don't understand is how they make an initial prediction of $P$. I'm guessing they take into account known errors in the sensors and possibly a noise coefficient, but I'm not entirely sure. I'll probably ask one of the algo engineers at work about it and update this post based on what they tell me.
