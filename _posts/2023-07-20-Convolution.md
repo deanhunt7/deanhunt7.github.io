@@ -2,7 +2,7 @@
 
 Finally got around to looking at convolution. I'd used it a lot with CNNs but hadn't ever really stopped to think about what it's actually doing. This post is going to go over a few of the insights that I had with convolution (and my connection with fusion, to tie it all together).
 
-I mostly used 3b1b (https://www.youtube.com/watch?v=KuXjwB4LzSA) and (https://www.youtube.com/watch?v=IaSGqQa5O-M) to gain the intuition for this. His videos never cease to amaze me, and his visual intuitions are great.
+I mostly used [this](https://www.youtube.com/watch?v=KuXjwB4LzSA) and [this](https://www.youtube.com/watch?v=IaSGqQa5O-M) to gain the intuition for this. His videos never cease to amaze me, and his visual intuitions are great.
 
 ### What are convolutions
 
@@ -21,10 +21,13 @@ $$(f * g)[t]=\sum_{k=0}^{t} f[k] g[t-k] \nonumber$$
 This one confused me first as well, until I got the nice sliding window window example and animation, after which everything made sense.
 
 It all comes down to flipping and sliding the window (in the discrete case). The reason for the flip is so that every pair lines up to add to the same number. (Note: I just realized that in the discrete case, our array has to be all the natural numbers up to whatever $t$ we choose. But that makes sense, since everything else will just be 0.) Then, the integral definition
-
 $$(f * g)[t]=\int_{-\infty}^{\infty} f[k] g[t-k] \nonumber$$
 is just the continuous extension from the discrete case above.
 
 # fft
 
 I ran into some difficulties understanding the FFT algorithm. I haven't spent enough time looking at it to figure out why I care yet. There are some good Veritasium and a 3b1b video solely dedicated to this, so I'll take a look at those this week.
+
+# fusion
+
+I'll need to think more about how to satisfactorially explain the connection with fusion. 
