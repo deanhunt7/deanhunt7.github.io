@@ -1,3 +1,4 @@
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ tex2jax: { skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'], inlineMath: [['$','$']] } }); </script> <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> 
 # Convolution
 
 Finally got around to looking at convolution. I'd used it a lot with CNNs but hadn't ever really stopped to think about what it's actually doing. This post is going to go over a few of the insights that I had with convolution (and my connection with fusion, to tie it all together).
