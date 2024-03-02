@@ -6,6 +6,7 @@ The best place I found to start was thinking of an elementary analogy: that of a
 - 1 oz banana
 - 3 oz strawberries
 - 1 cup of milk
+
 and so on. However, there is a constraint. *You must know the list of all possible ingredients.* I wouldn't be able to find all of the ingredients if I didn't know one of them even existed. After having all of the ingredients of the smoothie, I can get our original smoothie back by simply mixing the ingredients together.
 
 Now let's move up a level, and look at the field of audio recording. Say you're an amateur band, recording your first song for release. You set up your microphone and instruments, and begin to warm up. You start a practice recording with an A chord. How would this graph look?
