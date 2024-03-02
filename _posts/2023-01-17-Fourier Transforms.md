@@ -1,5 +1,5 @@
 # Fourier Transformations
-
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ tex2jax: { skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'], inlineMath: [['$','$']] } }); </script> <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> 
 I've heard about these for so long, and in so many fields. Yet, I never took the time to fully dive deep into them and really understand when and how they were useful tools. When I learned about a Fourier infrared spectography method used in chemistry to determine the structure of a compound, I decided to try to understand what I was missing.
 
 The best place I found to start was thinking of an elementary analogy: that of a smoothie. We can think of a Fourier transformation, in the most basic sense, as being able to determine the amounts of ingredients of a smoothie. If you give me a specific smoothie, I could tell you that you used:
