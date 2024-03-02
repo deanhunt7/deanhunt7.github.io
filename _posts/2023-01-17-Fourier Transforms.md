@@ -15,7 +15,7 @@ Now let's move up a level, and look at the field of audio recording. Say you're 
 
 In this graph, the $x$-axis represents DB (sound level), and the $y$-axis represents time. However, say a friend of yours takes your recording, and wants to decompose which note you played. How would they go about doing this?
 
-Obviously, this isn't possible by looking at the grpah. Although there is a clear pattern, you can't easily turn it into a set of notes. What the above graph represents, rather, is the interference pattern between the 3 notes you were playing. 
+Obviously, this isn't possible by looking at the graph. Although there is a clear pattern, you can't easily turn it into a set of notes. What the above graph represents, rather, is the interference pattern between the 3 notes you were playing. 
 
 ![figure1](https://user-images.githubusercontent.com/83550862/213028707-11a756c0-80d5-4bdc-8392-1a3f396d64a6.png)
 
