@@ -20,6 +20,7 @@ gem "github-pages", "~> 228", group: :jekyll_plugins
 # If you have any plugins, put them here!
 group :jekyll_plugins do
   gem "jekyll-feed", "~> 0.6"
+  gem "jekyll-jupyter-notebook"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -41,4 +42,3 @@ gem "kramdown-parser-gfm"
 gem "http_parser.rb", "~> 0.6.0", :platforms => [:jruby]
 
 
-gem "jekyll-jupyter-notebook"
