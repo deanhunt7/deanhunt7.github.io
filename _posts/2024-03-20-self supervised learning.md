@@ -1,3 +1,5 @@
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ tex2jax: { skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'], inlineMath: [['$','$']] } }); </script> <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> 
+
 I realized my AI chops are atrocious. I wrote this post for a few reasons. First, I wanted to improve my chops by working on something I've never seen before. I also wanted to get better at following tutorials online (I used [this](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial17/SimCLR.htmlv) one), since it feels like I only copy and paste. Going to think and write about this in the future. I also wanted to kick-start this blog of mine back up, with a focus now on interesting technical things. Might relocate my thoughts to another blog to keep things separate for separate spheres of my life, not sure recruiters want to be reading my deepest thoughts.
 
 # self-supervised learning
@@ -16,7 +18,7 @@ TODO: (describe what features are important first)
 
 Incidentally, the solution problem also helps solve another problem. By learning what features are important, we are actually learning the whole shape of the data. From this, it's a small step to being able to create our own fuzzy versions of this same kind of data. This becomes extremely useful for a bunch generative techniques, as we can now generate any part of the data we want. Examples include extending picture borders, adding frames to a video, etc.
 
-| ![]() |
+| ![Screenshot 2024-03-18 194502](https://github.com/deanhunt7/deanhunt7.github.io/assets/83550862/e358eebe-13a6-4e34-9b13-23db39be5928) |
 |:--:|
 | *visualization of how we can learn the shape of the data* |
 
@@ -184,14 +186,12 @@ plt.show()
 plt.close()
 ```
 
-    INFO:lightning_fabric.utilities.seed:Seed set to 69
-    
 
+| ![Untitled](https://github.com/deanhunt7/deanhunt7.github.io/assets/83550862/d05e5d1f-89ec-42bc-b4c6-6d087a24becd) |
+|:--:|
+| *some augmented images from the dataset* |
 
     
-![svg](output_8_1.svg)
-    
-
 
 We can see that some objectively "important" features, like edges of animals and certain shapes, are preserved even though the blurring, color shifts and cropping.
 
@@ -540,7 +540,8 @@ for k, score in zip(dataset_sizes, test_scores):
 
 
     
-![svg](output_26_0.svg)
+![image](https://github.com/deanhunt7/deanhunt7.github.io/assets/83550862/a4c3d772-b602-44d5-ac37-f488e4fbd0fa)
+
     
 
 
@@ -680,14 +681,6 @@ print(f"Accuracy on test set: {100*resnet_result['test']:4.2f}%")
 
     INFO:pytorch_lightning.utilities.migration.utils:Lightning automatically upgraded your loaded checkpoint from v1.3.4 to v2.2.1. To apply the upgrade to your files permanently, run `python -m pytorch_lightning.utilities.upgrade_checkpoint ../saved_models/tutorial17/ResNet.ckpt`
     
-
-
-    Testing: |          | 0/? [00:00<?, ?it/s]
-
-
-
-    Testing: |          | 0/? [00:00<?, ?it/s]
-
 
     Accuracy on training set: 99.62%
     Accuracy on test set: 73.31%
