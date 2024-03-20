@@ -187,7 +187,7 @@ plt.close()
 ```
 
 
-| ![Untitled](https://github.com/deanhunt7/deanhunt7.github.io/assets/83550862/d05e5d1f-89ec-42bc-b4c6-6d087a24becd) |
+| ![Untitled](https://github.com/deanhunt7/deanhunt7.github.io/assets/83550862/8c5677af-f102-46dc-ad22-09bd3e8f2df0) |
 |:--:|
 | *some augmented images from the dataset* |
 
