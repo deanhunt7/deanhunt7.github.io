@@ -7,21 +7,25 @@ I realized my AI chops are atrocious. I wrote this post for a few reasons. First
 <br/>
 <br/>
 
-The problem is simple; it's way too expensive to label enough data for large models. It would be awesome if we could just collect a bunch of unlabeled data, let some model chew on it a bit, and use any insights gathered from the unlabeled data to help our downstream task. Self-supervised learning allows models to more closely model the human process of learning for a task.
+The problem is simple; it's way too expensive to label enough data for large models. It would be awesome if we could just collect a bunch of unlabeled data, let some model chew on it a bit, and use any insights gathered from the unlabeled data to help our downstream task. 
 
-We can perform excellent few-shot classification (like teaching a child to recognize a cow from a few pictures. It'll be recognized no matter whether it's laying down, jumping or even something illogical, like driving a car.) This is because we are pre-trained on massive amounts of data in our everyday lives from our various sensory inputs. This pre-training from birth allows us to modify our weights to be more receptive to tasks that are important to us, like object recognition. (Maybe if we had different pre-training and daily requirements, we could become experts at "useless" tasks like savant-level math tricks).
+Self-supervised learning allows models to learn more similarly to the human process of learning for a task. Humans can perform excellent few-shot classification (like teaching a child to recognize a cow from a few pictures. It'll be recognized no matter whether it's laying down, jumping or even something illogical, like driving a car.) This is because we are pre-trained on massive amounts of data in our everyday lives from our various sensory inputs. This pre-training from birth allows us to modify our weights to be more receptive to tasks that are important to us, like object recognition. (Maybe if we had different pre-training and daily requirements, we could become experts at "useless" tasks like savant-level math tricks).
 
-If we want to train a self-driving car, it's easy to record a few hours of real driving footage, and extremely tedious to label individual frames of the same video. Self-supervised learning helps improve results on unlabeled data (or data with very few labels).
-
-TODO: (describe what features are important first)
-
-
-Incidentally, the solution problem also helps solve another problem. By learning what features are important, we are actually learning the whole shape of the data. From this, it's a small step to being able to create our own fuzzy versions of this same kind of data. This becomes extremely useful for a bunch generative techniques, as we can now generate any part of the data we want. Examples include extending picture borders, adding frames to a video, etc.
+If we want to train a self-driving car, it's easy to record a few hours of real driving footage, and extremely tedious to label individual frames of the same video. Self-supervised learning helps improve results on unlabeled data (or data with very few labels). Incidentally, the solution problem also helps solve another problem. By learning what features are important, we are actually learning the whole shape of the data. From this, it's a small step to being able to create our own fuzzy versions of this same kind of data. This becomes extremely useful for a bunch generative techniques, as we can now generate any part of the data we want. Examples include extending picture borders, adding frames to a video, etc.
 
 | ![Screenshot 2024-03-18 194502](https://github.com/deanhunt7/deanhunt7.github.io/assets/83550862/e358eebe-13a6-4e34-9b13-23db39be5928) |
 |:--:|
 | *visualization of how we can learn the shape of the data* |
 
+# SimCLR
+
+SimCLR (Simple Framework for Contrastive Learning of Visual Representations) is a framework for implementing contrastive learning of images. *Contrastive learning* is one method of self-supervised learning. We want to learn a data representation that can represent an image as a set outputs representing "useful" features of the data. We can then use these improved representations in downstream tasks.
+
+To do this, we train a neural network to give us outputs that allows for correct clustering. We can do this by checking the cosine similarities of our representations of two similar inputs, and training our algorithm such that these representations are much more similar than those of unrelated data. If we perform random sets of transformations (cropping or flipping an image horizontally, etc) twice to an input, we're left with two similar inputs that we can use for training.
+
+This representation learning can be done with a set of two functions. The first function, $f(\cdot)$, is a regular neural net. We then append to this $g(\cdot)$, which maps the output of $f$ to a latent space where we can calculate loss more easily.
+
+Let's start to implement it.
 
 ```python
 # @title setup code { display-mode: "form" }
@@ -194,16 +198,6 @@ plt.close()
     
 
 We can see that some objectively "important" features, like edges of animals and certain shapes, are preserved even though the blurring, color shifts and cropping.
-
-# SimCLR
-
-SimCLR (Simple Framework for Contrastive Learning of Visual Representations) is a framework for implementing contrastive learning of images. *Contrastive learning* is one method of self-supervised learning. We want to learn a data representation that can represent an image as a set outputs representing "useful" features of the data. We can then use these improved representations in downstream tasks.
-
-To do this, we train a neural network to give us outputs that allows for correct clustering. We can do this by checking the cosine similarities of our representations of two similar inputs, and training our algorithm such that these representations are much more similar than those of unrelated data. If we perform random sets of transformations (cropping or flipping an image horizontally, etc) twice to an input, we're left with two similar inputs that we can use for training.
-
-This representation learning can be done with a set of two functions. The first function, $f(\cdot)$, is a regular neural net. We then append to this $g(\cdot)$, which maps the output of $f$ to a latent space where we can calculate loss more easily.
-
-Let's start to implement it.
 
 # SimCLR implementation
 
