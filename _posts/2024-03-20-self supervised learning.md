@@ -681,3 +681,5 @@ print(f"Accuracy on test set: {100*resnet_result['test']:4.2f}%")
     
 
 As we can see, on the full dataset, we achieve only a 73.31% accuracy score (even worse than our SimCLR on 10% of the data). So, our pre-training definitely works in this case!
+
+I feel like I got a good amount from this tutorial, and it definitely introduced me to a topic I hadn't given much thought before. I plan to do a lot more of this kind of stuff in the future, to help my AI chops improve more. I think I'm good on the theory for now and I need my hard skills to come catch up.
